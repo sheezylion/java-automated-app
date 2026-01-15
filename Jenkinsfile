@@ -16,7 +16,7 @@ pipeline {
     stage('Checkout') {
       steps {
         git branch: 'main',
-            url: 'https://github.com/LondheShubham153/simple-java-docker.git'
+            url: 'https://github.com/sheezylion/java-automated-app.git'
       }
     }
 
