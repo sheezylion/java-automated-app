@@ -1,5 +1,5 @@
-# stable official Java runtime base image
-FROM openjdk:17-jdk-alpine
+# Official OpenJDK 17 image (replacement for openjdk)
+FROM eclipse-temurin:17-jdk-alpine
 
 # metadata
 LABEL maintainer="your-email@example.com"
