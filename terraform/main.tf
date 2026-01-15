@@ -43,11 +43,11 @@ resource "aws_security_group" "tomcat_sg" {
   description = "Allow traffic only from Jenkins"
 
   ingress {
-    from_port       = 22
-    to_port         = 22
-    protocol        = "tcp"
-    security_groups = [aws_security_group.jenkins_sg.id]
-  }
+  from_port   = 22
+  to_port     = 22
+  protocol    = "tcp"
+  cidr_blocks = ["${var.my_ip}/32"]
+}
 
   ingress {
     from_port       = 8080
