@@ -1,0 +1,74 @@
+- name: Install Java 11 (Amazon Corretto)
+  yum:
+    name:
+      - java-11-amazon-corretto
+      - java-11-amazon-corretto-devel
+    state: present
+
+- name: Ensure JAVA_HOME is set system-wide
+  copy:
+    dest: /etc/profile.d/java.sh
+    content: |
+      export JAVA_HOME=/usr/lib/jvm/java-11-amazon-corretto
+      export PATH=$JAVA_HOME/bin:$PATH
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Download Tomcat archive
+  get_url:
+    url: https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.85/bin/apache-tomcat-9.0.85.tar.gz
+    dest: /tmp/apache-tomcat-9.0.85.tar.gz
+    mode: "0644"
+
+- name: Extract Tomcat if not already installed
+  unarchive:
+    src: /tmp/apache-tomcat-9.0.85.tar.gz
+    dest: /opt/
+    remote_src: yes
+    creates: /opt/apache-tomcat-9.0.85
+
+- name: Create Tomcat symlink
+  file:
+    src: /opt/apache-tomcat-9.0.85
+    dest: /opt/tomcat
+    state: link
+
+- name: Ensure Tomcat ownership
+  file:
+    path: /opt/apache-tomcat-9.0.85
+    owner: ec2-user
+    group: ec2-user
+    recurse: yes
+
+- name: Install Tomcat systemd service
+  copy:
+    dest: /etc/systemd/system/tomcat.service
+    content: |
+      [Unit]
+      Description=Apache Tomcat
+      After=network.target
+
+      [Service]
+      Type=forking
+      User=ec2-user
+      Group=ec2-user
+      Environment=JAVA_HOME=/usr/lib/jvm/java-11-amazon-corretto
+      Environment=CATALINA_HOME=/opt/tomcat
+      ExecStart=/opt/tomcat/bin/startup.sh
+      ExecStop=/opt/tomcat/bin/shutdown.sh
+      Restart=on-failure
+
+      [Install]
+      WantedBy=multi-user.target
+    mode: "0644"
+
+- name: Reload systemd
+  systemd:
+    daemon_reload: yes
+
+- name: Enable and start Tomcat
+  service:
+    name: tomcat
+    state: started
+    enabled: yes

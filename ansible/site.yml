@@ -1,0 +1,11 @@
+- name: Configure Jenkins Server
+  hosts: jenkins
+  become: true
+  roles:
+    - jenkins
+
+- name: Configure Tomcat Server
+  hosts: tomcat
+  become: true
+  roles:
+    - tomcat

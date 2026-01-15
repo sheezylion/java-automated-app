@@ -1,0 +1,41 @@
+- name: Install Java 11 (Amazon Corretto)
+  yum:
+    name:
+      - java-11-amazon-corretto
+      - java-11-amazon-corretto-devel
+    state: present
+
+- name: Ensure JAVA_HOME is set system-wide
+  copy:
+    dest: /etc/profile.d/java.sh
+    content: |
+      export JAVA_HOME=/usr/lib/jvm/java-11-amazon-corretto
+      export PATH=$JAVA_HOME/bin:$PATH
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Add Jenkins repository
+  get_url:
+    url: https://pkg.jenkins.io/redhat-stable/jenkins.repo
+    dest: /etc/yum.repos.d/jenkins.repo
+    mode: "0644"
+
+- name: Import Jenkins GPG key
+  rpm_key:
+    key: https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+    state: present
+
+- name: Install Jenkins, Maven, and Git
+  yum:
+    name:
+      - jenkins
+      - maven
+      - git
+    state: present
+
+- name: Enable and start Jenkins
+  service:
+    name: jenkins
+    state: started
+    enabled: yes
