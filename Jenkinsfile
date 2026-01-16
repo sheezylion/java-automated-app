@@ -6,7 +6,7 @@ pipeline {
   }
 
   environment {
-    TOMCAT_HOST = "<TOMCAT_PRIVATE_IP>"
+    TOMCAT_HOST = "172.31.21.205"
     TOMCAT_PATH = "/opt/tomcat/webapps"
     SLACK_WEBHOOK = credentials('slack-webhook')
   }
