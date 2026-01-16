@@ -10,18 +10,16 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
 
-@WebServlet("/")
+@WebServlet("/hello")
 public class HelloServlet extends HttpServlet {
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
+            throws IOException {
 
         resp.setContentType("text/plain");
-
-        PrintWriter out = resp.getWriter();
-        out.println("Hello from Tomcat!");
-        out.println("Current date: " + new Date());
+        resp.getWriter().println("Hello from Tomcat!");
+        resp.getWriter().println("Current date: " + new Date());
     }
 }
+
 
