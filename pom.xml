@@ -10,19 +10,20 @@
   <version>1.0.0</version>
   <packaging>war</packaging>
 
-  <name>Simple Java WAR App</name>
+  <name>Java Auto App</name>
 
   <properties>
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
+  <!-- ✅ dependencies must live here -->
   <dependencies>
-    <!-- Servlet API (provided by Tomcat) -->
     <dependency>
-      <groupId>jakarta.servlet</groupId>
-      <artifactId>jakarta.servlet-api</artifactId>
-      <version>5.0.0</version>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>4.0.1</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>
@@ -32,3 +33,4 @@
   </build>
 
 </project>
+
