@@ -59,6 +59,7 @@ Command
 
 ```
 terraform init
+terraform plan
 terraform apply
 ```
 <img width="722" height="555" alt="Screenshot 2026-01-15 at 17 28 04" src="https://github.com/user-attachments/assets/3dd43178-662e-49b2-b5c6-5b34fb5e55eb" />
